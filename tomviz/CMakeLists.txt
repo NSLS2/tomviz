@@ -172,6 +172,10 @@ set(SOURCES
   ProgressDialog.h
   ProgressDialogManager.cxx
   ProgressDialogManager.h
+  PtychoDialog.cxx
+  PtychoDialog.h
+  PtychoRunner.cxx
+  PtychoRunner.h
   PythonGeneratedDatasetReaction.cxx
   PythonGeneratedDatasetReaction.h
   PythonReader.cxx
@@ -271,8 +275,6 @@ set(SOURCES
   vtkOMETiffReader.h
   vtkTriangleBar.cxx
   vtkTriangleBar.h
-  vtkVolumeScaleRepresentation.h
-  vtkVolumeScaleRepresentation.cxx
   WebExportWidget.cxx
   WebExportWidget.h
 )
@@ -623,9 +625,12 @@ endforeach()
 set(tomviz_python_modules
   __init__.py
   _internal.py
+  dataset.py
+  external_dataset.py
   fix_pdb.py
   operators.py
   internal_dataset.py
+  internal_utils.py
   itkutils.py
   utils.py
   web.py
@@ -676,9 +681,9 @@ endforeach()
 
 set(tomviz_python_pyxrf_modules
   __init__.py
+  ic_names.py
   load_output.py
-  make_hdf5.py
-  process_projections.py
+  sids.py
 )
 
 file(MAKE_DIRECTORY "${tomviz_python_binary_dir}/tomviz/pyxrf")
@@ -686,6 +691,18 @@ foreach(file ${tomviz_python_pyxrf_modules})
   execute_process(COMMAND ${CMAKE_COMMAND} -E ${script_cmd}
     "${tomviz_SOURCE_DIR}/tomviz/python/tomviz/pyxrf/${file}"
     "${tomviz_python_binary_dir}/tomviz/pyxrf/${file}")
+endforeach()
+
+set(tomviz_python_ptycho_modules
+  __init__.py
+  ptycho.py
+)
+
+file(MAKE_DIRECTORY "${tomviz_python_binary_dir}/tomviz/ptycho")
+foreach(file ${tomviz_python_ptycho_modules})
+  execute_process(COMMAND ${CMAKE_COMMAND} -E ${script_cmd}
+    "${tomviz_SOURCE_DIR}/tomviz/python/tomviz/ptycho/${file}"
+    "${tomviz_python_binary_dir}/tomviz/ptycho/${file}")
 endforeach()
 
 file(GLOB tomviz_python_state_modules "${tomviz_SOURCE_DIR}/tomviz/python/tomviz/state/*.py")
